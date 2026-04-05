@@ -13,7 +13,7 @@ import {
   editarClient,
   excluirClient,
   getUser
-} from "../controllers/productcontrollers";
+} from "../controllers/controllers";
 import { Router } from "express";
 
 const router = Router();

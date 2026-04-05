@@ -3,8 +3,19 @@ import { produtos, administracao, clients } from "../database/schema";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { eq, sql } from "drizzle-orm";
-import type { Config } from "drizzle-kit"; // Import the Config from 'drizzle-kit';
+import {  calculateVariationProcedure } from "@/procedures/an";
 
+export const calcularVariacao = async (req: Request, res: Response) => {
+  const { produto_id } = req.params;
+  try {
+    await db.execute(sql`${calculateVariationProcedure}`);
+    await db.execute(sql`CALL calcular_variacao_produto(${produto_id})`);
+    return res.status(200).json({ message: "Variacao calculada com sucesso!" });
+  } catch (err:any) {
+    console.error("ERRO REAL:", err);
+    return res.status(500).json({ sucesso: false, mensagem: "Erro ao calcular variacao.", data: err.message });
+  }
+};
 
 export const getProdutos = async (req: Request, res: Response) => {
   try {
