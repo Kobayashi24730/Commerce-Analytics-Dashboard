@@ -1,0 +1,53 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #0f172a;
+}
+
+.login-card {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: white;
+}
+
+.login-card input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+.login-card button {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #3b82f6;
+  color: white;
+  cursor: pointer;
+}
+
+.login-card button:hover {
+  background: #2563eb;
+}
+
+.checkbox {
+  font-size: 12px;
+}
+
+.switch {
+  font-size: 12px;
+  text-align: center;
+}
+
+.switch span {
+  color: #3b82f6;
+  cursor: pointer;
+  margin-left: 5px;
+}

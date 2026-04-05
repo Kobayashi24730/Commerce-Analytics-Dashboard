@@ -1,0 +1,154 @@
+/* =========================
+   GRAFICOS GRID
+========================= */
+
+.graficos-grid {
+  padding: 0;
+}
+
+.charts_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+  animation: fadeUp 0.5s ease;
+}
+
+/* =========================
+   CHART BOX
+========================= */
+
+.chart-box {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  height: 380px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0078d4, #106ebe);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chart-box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  border-color: #0078d4;
+}
+
+.chart-box:hover::before {
+  transform: scaleX(1);
+}
+
+/* =========================
+   CHART CONTAINER
+========================= */
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================
+   LOADING STATE
+========================= */
+
+.loading-grafico-one {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 16px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* =========================
+   ERROR STATE
+========================= */
+
+.erro-grafico-one {
+  text-align: center;
+  padding: 40px 20px;
+  color: #ef4444;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: #fef2f2;
+  border-radius: 8px;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 1024px) {
+  .charts_container {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .chart-box {
+    height: 320px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .charts_container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chart-box {
+    height: 300px;
+    padding: 16px;
+  }
+
+  .graficos-grid {
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-box {
+    height: 280px;
+    padding: 12px;
+  }
+
+  .loading-grafico-one {
+    font-size: 14px;
+  }
+}
