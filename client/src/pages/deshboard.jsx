@@ -1,10 +1,7 @@
 import "../styles/HomeStyles.css";
 
 import {
-  useTopProdutos,
-  useAllVendas,
-  useTaxa,
-  useCrecimento,
+  useGetMetrics,
 } from "@/hooks";
 import Graficos from "../components/graficos";
 
@@ -46,42 +43,22 @@ function getStatusLabel(totalVendas) {
   return { label: "Baixo", className: "baixo" };
 }
 
-function normalizeProdutos(data) {
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data?.dado)) return data.dado;
-  if (Array.isArray(data?.produtos)) return data.produtos;
-  return [];
-}
-
 export default function Dashboard() {
-  const topProdutosQuery = useTopProdutos();
-  const totalVendasQuery = useAllVendas();
-  const taxaQuery = useTaxa();
-  const crescimentoQuery = useCrecimento();
+  const { data: metrics, isLoading } = useGetMetrics();
 
-  const produtos = normalizeProdutos(topProdutosQuery.data).map((produto, index) => ({
+  const produtos = (Array.isArray(metrics?.top_produtos) ? metrics.top_produtos : []).map((produto, index) => ({
     id: produto?.id ?? index,
     nome: produto?.nome ?? "Produto sem nome",
     preco: Number(produto?.preco ?? 0),
     total_vendas: Number(produto?.total_vendas ?? produto?.vendas ?? 0),
   }));
 
-  const isLoading =
-    topProdutosQuery.isLoading ||
-    totalVendasQuery.isLoading ||
-    taxaQuery.isLoading ||
-    crescimentoQuery.isLoading;
-
-  const totalPedidos = Number(totalVendasQuery.data?.total_vendas ?? 0) || 0;
-  const crescimentoPercentual = Number(crescimentoQuery.data?.crecimento ?? 0) || 0;
-  const taxaSucesso = Number(taxaQuery.data?.taxa ?? 0) || 0;
+  const totalPedidos = Number(metrics?.total_vendas ?? 0) || 0;
+  const crescimentoPercentual = Number(metrics?.crescimento ?? 0) || 0;
+  const taxaSucesso = Number(metrics?.taxa ?? 0) || 0;
   const produtosCadastrados = produtos.length;
-
-  const faturamentoEstimado = produtos.reduce((acc, produto) => {
-    return acc + produto.preco * produto.total_vendas;
-  }, 0);
-
-  const ticketMedio = totalPedidos > 0 ? faturamentoEstimado / totalPedidos : 0;
+  const faturamentoEstimado = Number(metrics?.faturamento ?? 0) || 0;
+  const ticketMedio = Number(metrics?.ticket_medio ?? 0) || 0;
   const topProduto = produtos[0] ?? null;
 
   const alertas = [

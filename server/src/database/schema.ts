@@ -8,7 +8,6 @@ import {
   decimal,
   boolean,
   date,
-  enum as pgEnum,
 } from "drizzle-orm/pg-core";
 
 // ==================== TABELA DE CATEGORIAS ====================

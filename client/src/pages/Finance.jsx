@@ -18,6 +18,7 @@ import {
 } from "react-icons/md";
 
 import { getFinancePageData } from "../data/analyticsMockData";
+import { useGetMetrics } from "../hooks";
 import "../styles/AnalyticsPages.css";
 
 const iconMap = {
@@ -33,8 +34,52 @@ export default function Finance() {
     queryFn: getFinancePageData,
     staleTime: 1000 * 60 * 10,
   });
+  const { data: metricsData, isLoading: isMetricsLoading } = useGetMetrics();
 
-  if (isLoading || !data) {
+  const metrics = [
+    {
+      id: "faturamento",
+      label: "Faturamento",
+      value: new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+        maximumFractionDigits: 2,
+      }).format(Number(metricsData?.faturamento ?? 0)),
+      footnote: "Receita total consolidada",
+      tone: "positive",
+      icon: "paid",
+    },
+    {
+      id: "ticket_medio",
+      label: "Ticket medio",
+      value: new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+        maximumFractionDigits: 2,
+      }).format(Number(metricsData?.ticket_medio ?? 0)),
+      footnote: "Valor medio por venda",
+      tone: "neutral",
+      icon: "wallet",
+    },
+    {
+      id: "crescimento",
+      label: "Crescimento",
+      value: `${Number(metricsData?.crescimento ?? 0).toFixed(2)}%`,
+      footnote: "Mes atual vs mes anterior",
+      tone: Number(metricsData?.crescimento ?? 0) >= 0 ? "positive" : "negative",
+      icon: "sync",
+    },
+    {
+      id: "taxa",
+      label: "Taxa de sucesso",
+      value: `${Number(metricsData?.taxa ?? 0).toFixed(2)}%`,
+      footnote: "Conversao sobre tentativas",
+      tone: Number(metricsData?.taxa ?? 0) >= 70 ? "positive" : "neutral",
+      icon: "receipt",
+    },
+  ];
+
+  if (isLoading || isMetricsLoading || !data) {
     return (
       <div className="analytics-page">
         <section className="analytics-hero money">
@@ -111,7 +156,7 @@ export default function Finance() {
       </section>
 
       <section className="metrics-grid">
-        {data.metrics.map((metric) => (
+        {metrics.map((metric) => (
           <article className="metric-card" key={metric.id}>
             <span className="metric-label">
               {iconMap[metric.icon]}

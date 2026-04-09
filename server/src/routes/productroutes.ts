@@ -1,45 +1,38 @@
 import {
-  addProdutos,
   getProdutos,
-  TopVendidos,
-  getAtualizacoes,
+  addProduto,
+  editProduto,
+  delProduto
+} from "@/controllers/controllersProdutos";
+import {
   getClients,
-  AddClients,
-  AllVendas,
-  taxa_sucesso,
-  vendas_vs_vendas_ano_anterior,
-  excluirProduto,
-  editarProduto,
-  editarClient,
-  excluirClient,
-  getUser
-} from "../controllers/controllers";
+  addClient,
+  editClient,
+  delClients
+} from "@/controllers/controllersClients";
+import { getMetrics } from "@/controllers/controllersMetrics";
 import { Router } from "express";
 
 const router = Router();
 
 // PRODUTOS
 router.get("/produtos", getProdutos);
-router.post("/produtos", addProdutos);
-router.put("/produtos/:id", editarProduto);
-router.delete("/produtos/:id", excluirProduto);
+router.post("/produtos", addProduto);
+router.put("/produtos/:id", editProduto);
+router.delete("/produtos/:id", delProduto);
 
 //CLIENTS
 router.get("/clients", getClients);
-router.post("/clients", AddClients);
-router.put("/clients/:id", editarClient);
-router.delete("/clients/:id", excluirClient);
+router.post("/clients", addClient);
+router.put("/clients/:id", editClient);
+router.delete("/clients/:id", delClients);
 
 // AUTH
-router.get("/auth", getUser);
+router.get("/auth", getClients);
 
 
 // METRICS
-router.get("/metrics/topvendidos", TopVendidos);
-router.get("/metrics/getatualizacoes", getAtualizacoes);
-router.get("/metrics/allvendas", AllVendas);
-router.get("/metrics/taxasucesso", taxa_sucesso);
-router.get("/metrics/crecimento", vendas_vs_vendas_ano_anterior);
+router.get("/metrics", getMetrics);
 
 export default router;
 
