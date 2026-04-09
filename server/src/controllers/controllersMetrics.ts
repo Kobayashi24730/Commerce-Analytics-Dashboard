@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { db } from "@/database";
+import { db } from "../database";
 import { sql } from "drizzle-orm";
 
 export const getMetrics = async (req: Request, res: Response) => {

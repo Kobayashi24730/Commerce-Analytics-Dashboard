@@ -1,5 +1,5 @@
-import { db } from "@/database";
-import { clients } from "@/database/schema";
+import { db } from "../database";
+import { clients } from "../database/schema";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { eq, sql } from "drizzle-orm";

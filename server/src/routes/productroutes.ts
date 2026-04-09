@@ -3,14 +3,14 @@ import {
   addProduto,
   editProduto,
   delProduto
-} from "@/controllers/controllersProdutos";
+} from "../controllers/controllersProdutos";
 import {
   getClients,
   addClient,
   editClient,
   delClients
-} from "@/controllers/controllersClients";
-import { getMetrics } from "@/controllers/controllersMetrics";
+} from "../controllers/controllersClients";
+import { getMetrics } from "../controllers/controllersMetrics";
 import { Router } from "express";
 
 const router = Router();

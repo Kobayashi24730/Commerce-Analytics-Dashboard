@@ -1,5 +1,5 @@
-import { db } from "@/database";
-import { produtos } from "@/database/schema";
+import { db } from "../database";
+import { produtos } from "../database/schema";
 import { Request, Response } from "express";
 import { eq, sql } from "drizzle-orm";
 
